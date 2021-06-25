@@ -100,7 +100,7 @@ When you navigate to `localhost:3000`, you should see the web application contai
 
    ![screenshot of web app home page](./screenshots/InitializeDevice.png)
 
-When the `Twilio.Device` is initialized, you will be assigned a random "client name", which will appear the 'Device Info' column on the left side of the page. This client name is used as the `identity` field when generating an Access Token for the `Twilio.Device`, and is also used to route SDK-to-SDK calls to the correct `Twilio.Device`.
+When the `Twilio.Device` is initialized, you will be assigned a random "client name", which will appear in the 'Device Info' column on the left side of the page. This client name is used as the `identity` field when generating an Access Token for the `Twilio.Device`, and is also used to route SDK-to-SDK calls to the correct `Twilio.Device`.
 
    ![screenshot of client name on web app](./screenshots/ClientName.png)
 

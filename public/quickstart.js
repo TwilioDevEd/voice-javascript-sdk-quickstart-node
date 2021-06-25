@@ -1,19 +1,25 @@
 ﻿$(function () {
-  const speakerDevices = document.getElementById('speaker-devices');
-  const ringtoneDevices = document.getElementById('ringtone-devices');
-  const outputVolumeBar = document.getElementById('output-volume');
-  const inputVolumeBar = document.getElementById('input-volume');
-  const volumeIndicators = document.getElementById('volume-indicators');
-  const callButton = document.getElementById('button-call');
-  const hangupButton = document.getElementById('button-hangup');
-  const callControlsDiv = document.getElementById('call-controls');
-  const audioSelectionDiv = document.getElementById('output-selection');
-  const getAudioDevicesButton = document.getElementById('get-devices');
+  const speakerDevices = document.getElementById("speaker-devices");
+  const ringtoneDevices = document.getElementById("ringtone-devices");
+  const outputVolumeBar = document.getElementById("output-volume");
+  const inputVolumeBar = document.getElementById("input-volume");
+  const volumeIndicators = document.getElementById("volume-indicators");
+  const callButton = document.getElementById("button-call");
+  const hangupButton = document.getElementById("button-hangup");
+  const callControlsDiv = document.getElementById("call-controls");
+  const audioSelectionDiv = document.getElementById("output-selection");
+  const getAudioDevicesButton = document.getElementById("get-devices");
   const logDiv = document.getElementById("log");
   const incomingCallDiv = document.getElementById("incoming-call");
-  const incomingCallHangupButton = document.getElementById("button-hangup-incoming");
-  const incomingCallAcceptButton = document.getElementById("button-accept-incoming");
-  const incomingCallRejectButton = document.getElementById("button-reject-incoming");
+  const incomingCallHangupButton = document.getElementById(
+    "button-hangup-incoming"
+  );
+  const incomingCallAcceptButton = document.getElementById(
+    "button-accept-incoming"
+  );
+  const incomingCallRejectButton = document.getElementById(
+    "button-reject-incoming"
+  );
   const phoneNumberInput = document.getElementById("phone-number");
   const incomingPhoneNumberEl = document.getElementById("incoming-number");
   const startupButton = document.getElementById("startup-button");
@@ -21,56 +27,50 @@
   let device;
   let token;
 
-
   // Event Listeners
 
   callButton.onclick = (e) => {
     e.preventDefault();
     makeOutgoingCall();
-  }
+  };
   getAudioDevicesButton.onclick = getAudioDevices;
   speakerDevices.addEventListener("change", updateOutputDevice);
   ringtoneDevices.addEventListener("change", updateRingtoneDevice);
   hangupButton.onclick = hangup;
 
-
-  // SETUP STEP 1: 
+  // SETUP STEP 1:
   // Browser client should be started after a user gesture
   // to avoid errors in the browser console re: AudioContext
-  startupButton.addEventListener('click', startupClient)
-
+  startupButton.addEventListener("click", startupClient);
 
   // SETUP STEP 2: Request an Access Token
   async function startupClient() {
-    
-    log('Requesting Access Token...');
-    
+    log("Requesting Access Token...");
+
     try {
-      const data = await $.getJSON('/token')
-      log('Got a token.');
+      const data = await $.getJSON("/token");
+      log("Got a token.");
       token = data.token;
       setClientNameUI(data.identity);
-      intitializeDevice();  
-    } 
-    catch (err) {
+      intitializeDevice();
+    } catch (err) {
       console.log(err);
       log("An error occurred. See your browser console for more information.");
     }
-
   }
 
-  // SETUP STEP 3: 
+  // SETUP STEP 3:
   // Instantiate a new Twilio.Device
   function intitializeDevice() {
     logDiv.classList.remove("hide");
-    log("Initializing device")
+    log("Initializing device");
     device = new Twilio.Device(token, {
-      debug: true, 
+      debug: true,
       answerOnBridge: true,
       // Set Opus as our preferred codec. Opus generally performs better, requiring less bandwidth and
       // providing better audio quality in restrained network conditions. Opus will be default in 2.0.
-      codecPreferences: ["opus", "pcmu"]
-    })
+      codecPreferences: ["opus", "pcmu"],
+    });
 
     addDeviceListeners(device);
 
@@ -78,63 +78,58 @@
     device.register();
   }
 
-  // SETUP STEP 4: 
+  // SETUP STEP 4:
   // Listen for Twilio.Device states
   function addDeviceListeners(device) {
-
-    device.on("registered", function() {
+    device.on("registered", function () {
       log("Twilio.Device Ready to make and receive calls!");
       callControlsDiv.classList.remove("hide");
     });
 
-    device.on("error", function(error) {
+    device.on("error", function (error) {
       log("Twilio.Device Error: " + error.message);
     });
-    
+
     device.on("incoming", handleIncomingCall);
-            
+
     device.audio.on("deviceChange", updateAllAudioDevices.bind(device));
-    
+
     // Show audio selection UI if it is supported by the browser.
     if (device.audio.isOutputSelectionSupported) {
       audioSelectionDiv.classList.remove("hide");
     }
   }
 
-
   // MAKE AN OUTGOING CALL
 
   async function makeOutgoingCall() {
-    var params = { 
+    var params = {
       // get the phone number to call from the DOM
-      To: phoneNumberInput.value
+      To: phoneNumberInput.value,
     };
 
     if (device) {
-      log(`Attempting to call ${params.To} ...`)
-      
+      log(`Attempting to call ${params.To} ...`);
+
       // Twilio.Device.connect() returns a Call object
-      const call = await device.connect({ params })
+      const call = await device.connect({ params });
 
       // add listeners to the Call
       // "accepted" means the call has finished connecting and the state is now "open"
       call.addListener("accept", updateUIAcceptedCall);
       call.addListener("disconnect", updateUIDisconnectedCall);
-
-
     } else {
-      log("Unable to make call.")
+      log("Unable to make call.");
     }
   }
 
   function updateUIAcceptedCall(call) {
-    log("Call in progress ...")
+    log("Call in progress ...");
     callButton.disabled = true;
     hangupButton.classList.remove("hide");
     volumeIndicators.classList.remove("hide");
     bindVolumeIndicators(call);
   }
-
 
   function updateUIDisconnectedCall() {
     log("Call disconnected.");
@@ -143,64 +138,61 @@
     volumeIndicators.classList.add("hide");
   }
 
-  // HANG UP A CALL 
+  // HANG UP A CALL
 
   function hangup() {
-    log('Hanging up ...');
+    log("Hanging up ...");
     if (device) {
       device.disconnectAll();
     }
   }
 
-  
   // HANDLE INCOMING CALL
-  
+
   function handleIncomingCall(call) {
-    log(`Incoming call from ${call.parameters.From}`)
-    
+    log(`Incoming call from ${call.parameters.From}`);
+
     //show incoming call div and incoming phone number
     incomingCallDiv.classList.remove("hide");
     incomingPhoneNumberEl.innerHTML = call.parameters.From;
-    
+
     //add event listeners for Accept, Reject, and Hangup buttons
     incomingCallAcceptButton.onclick = () => {
       acceptIncomingCall(call);
-    }
-    
+    };
+
     incomingCallRejectButton.onclick = () => {
       rejectIncomingCall(call);
-    }
-    
+    };
+
     incomingCallHangupButton.onclick = () => {
       hangupIncomingCall(call);
-    }
-    
+    };
+
     // add event listener to call object
-    call.addListener('cancel', handleDisconnectedIncomingCall)
+    call.addListener("cancel", handleDisconnectedIncomingCall);
   }
-  
-  
+
   // ACCEPT INCOMING CALL
 
   function acceptIncomingCall(call) {
     call.accept();
-    
+
     //update UI
-    log('Accepted incoming call.');
+    log("Accepted incoming call.");
     incomingCallAcceptButton.classList.add("hide");
     incomingCallRejectButton.classList.add("hide");
     incomingCallHangupButton.classList.remove("hide");
   }
-  
+
   // REJECT INCOMING CALL
 
   function rejectIncomingCall(call) {
     call.reject();
-    
+
     log("Rejected incoming call");
     resetIncomingCallUI();
   }
-
 
   // HANG UP INCOMING CALL
 
@@ -210,19 +202,18 @@
     resetIncomingCallUI();
   }
 
-  // HANDLE CANCELLED INCOMING CALL  
+  // HANDLE CANCELLED INCOMING CALL
 
   function handleDisconnectedIncomingCall(call) {
     device.disconnectAll();
-    console.log('handledisconnected : ', call)
+    console.log("handledisconnected : ", call);
     log("Incoming call ended.");
     resetIncomingCallUI();
   }
 
-
   // MISC USER INTERFACE
 
-  // Activity log 
+  // Activity log
   function log(message) {
     logDiv.innerHTML += `<p class="log-entry">&gt;&nbsp; ${message} </p>`;
     logDiv.scrollTop = logDiv.scrollHeight;
@@ -233,17 +224,16 @@
     div.innerHTML = `Your client name: <strong>${clientName}</strong>`;
   }
 
-  function resetIncomingCallUI () {
+  function resetIncomingCallUI() {
     incomingPhoneNumberEl.innerHTML = "";
     incomingCallDiv.classList.add("hide");
   }
 
-  
   // AUDIO CONTROLS
 
   async function getAudioDevices() {
-    await navigator.mediaDevices.getUserMedia({ audio: true })
-    updateAllAudioDevices.bind(device)
+    await navigator.mediaDevices.getUserMedia({ audio: true });
+    updateAllAudioDevices.bind(device);
   }
 
   function updateAllAudioDevices() {
@@ -252,12 +242,11 @@
       updateDevices(ringtoneDevices, device.audio.ringtoneDevices.get());
     }
   }
-  
-  function updateOutputDevice() {
 
+  function updateOutputDevice() {
     const selectedDevices = Array.from(speakerDevices.children)
-    .filter((node) => node.selected)
-    .map((node) => node.getAttribute("data-id"));
+      .filter((node) => node.selected)
+      .map((node) => node.getAttribute("data-id"));
 
     device.audio.speakerDevices.set(selectedDevices);
   }
@@ -266,12 +255,12 @@
     const selectedDevices = Array.from(ringtoneDevices.children)
       .filter((node) => node.selected)
       .map((node) => node.getAttribute("data-id"));
-  
+
     device.audio.ringtoneDevices.set(selectedDevices);
   }
 
   function bindVolumeIndicators(call) {
-    call.on("volume", function(inputVolume, outputVolume) {
+    call.on("volume", function (inputVolume, outputVolume) {
       var inputColor = "red";
       if (inputVolume < 0.5) {
         inputColor = "green";
@@ -294,14 +283,13 @@
     });
   }
 
-
   // Update the available ringtone and speaker devices
   function updateDevices(selectEl, selectedDevices) {
     selectEl.innerHTML = "";
 
-    device.audio.availableOutputDevices.forEach(function(device, id) {
+    device.audio.availableOutputDevices.forEach(function (device, id) {
       var isActive = selectedDevices.size === 0 && id === "default";
-      selectedDevices.forEach(function(device) {
+      selectedDevices.forEach(function (device) {
         if (device.deviceId === id) {
           isActive = true;
         }

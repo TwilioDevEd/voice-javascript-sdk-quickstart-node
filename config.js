@@ -1,10 +1,10 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 const cfg = {};
 
-if (process.env.NODE_ENV !== 'test') {
-  dotenv.config({path: '.env'});
+if (process.env.NODE_ENV !== "test") {
+  dotenv.config({ path: ".env" });
 } else {
-  dotenv.config({path: '.env.example', silent: true});
+  dotenv.config({ path: ".env.example", silent: true });
 }
 
 // HTTP Port to run our web application

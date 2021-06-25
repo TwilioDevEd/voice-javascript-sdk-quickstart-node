@@ -5,13 +5,12 @@ name: Node.js
 
 on:
   push:
-    branches: [ master, next ]
+    branches: [master, next]
   pull_request:
-    branches: [ master, next ]
+    branches: [master, next]
 
 jobs:
   build:
-
     runs-on: ${{ matrix.platform }}
 
     strategy:
@@ -20,17 +19,17 @@ jobs:
         platform: [windows-latest, macos-latest, ubuntu-latest]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm test
-      env:
-        CI: true
-        TWILIO_ACCOUNT_SID: ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        TWILIO_TWIML_APP_SID: APXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        TWILIO_CALLER_ID: +1XXXYYYZZZZ
-        TWILIO_API_KEY: SKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        TWILIO_API_SECRET: XXXXXXXXXXXXXXXXX
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm test
+        env:
+          CI: true
+          TWILIO_ACCOUNT_SID: ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          TWILIO_TWIML_APP_SID: APXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          TWILIO_CALLER_ID: +1XXXYYYZZZZ
+          TWILIO_API_KEY: SKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          TWILIO_API_SECRET: XXXXXXXXXXXXXXXXX

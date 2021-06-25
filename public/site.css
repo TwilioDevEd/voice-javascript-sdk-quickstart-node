@@ -31,7 +31,6 @@ header {
   text-align: center;
 }
 
-
 main {
   padding: 3em;
   max-width: 1200px;
@@ -67,14 +66,14 @@ select {
 
 /* Center Column */
 input {
-    font-family: Helvetica-LightOblique, Helvetica, sans-serif;
-    font-style: oblique;
-    font-size: 1em;
-    width: 100%;
-    height: 2.5em;
-    padding: 0;
-    display: block;
-    margin: 10px 0;
+  font-family: Helvetica-LightOblique, Helvetica, sans-serif;
+  font-style: oblique;
+  font-size: 1em;
+  width: 100%;
+  height: 2.5em;
+  padding: 0;
+  display: block;
+  margin: 10px 0;
 }
 
 div#volume-indicators {
@@ -105,7 +104,7 @@ div#volume-indicators > div {
 
 .log-entry {
   color: #686865;
-  font-family: 'Share Tech Mono', 'Courier New', Courier, fixed-width;
+  font-family: "Share Tech Mono", "Courier New", Courier, fixed-width;
   font-size: 1.25em;
   line-height: 1.25em;
   margin-left: 1em;

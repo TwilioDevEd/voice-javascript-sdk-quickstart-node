@@ -115,7 +115,7 @@ Enter one client's name in the other client's 'Make a Call' input and press the 
 
 ### Receiving Incoming Calls from a Non-Browser Device
 
-You will first need to configure your Twilio Voice Phone Number with the same ngrok url (with '/voice' on the end) as you did for your TwiML App. This tells Twilio what to do once your Twilio Phone number receives an incoming call.
+You will first need to configure your Twilio Voice Phone Number with the same ngrok url (with '/voice' on the end) as you did for your TwiML App. This tells Twilio how to handle an incoming call directed to your Twilio Voice Number.
 
    1. Log in to your [Twilio Console](https://www.twilio.com/console)
    2. Navigate to your [Active Numbers list](https://www.twilio.com/console/phone-numbers/incoming)

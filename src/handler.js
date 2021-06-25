@@ -5,8 +5,10 @@ const VoiceGrant = AccessToken.VoiceGrant;
 const nameGenerator = require('../name_generator');
 const config = require('../config');
 
+var identity;
+
 exports.tokenGenerator = function tokenGenerator() {
-  var identity = nameGenerator();
+  identity = nameGenerator();
   
   const accessToken = new AccessToken(config.accountSid,
       config.apiKey, config.apiSecret);

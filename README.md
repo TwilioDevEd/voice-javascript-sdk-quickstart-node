@@ -71,7 +71,7 @@ Before we begin local development, we need to collect all the config values we n
    npm start
    ```
 
-6. Navigate to [http://localhost:3000](http://localhost:3000)
+6. Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
 7. Expose your application to the wider internet using `ngrok`. This step is **crucial** for the app to work as expected.
 
@@ -82,30 +82,60 @@ Before we begin local development, we need to collect all the config values we n
 8. `ngrok` will assign a unique URL to your tunnel.
    It might be something like `https://asdf456.ngrok.io`. You will need this to configure your TwiML app in the next step.
 
-9. [Configure your TwiML app](https://www.twilio.com/console/voice/twiml/apps)'s
-Voice "REQUEST URL" to be your ngrok URL plus `/voice`. (Example: `https://asdf456.ngrok.io/voice`)
-   **Note:** You **must** use the https URL, otherwise some browsers will block
+9. Configure your TwiML app
+    - In the Twilio Console, navigate to [Programmable Voice > TwiML > TwiML Apps](https://www.twilio.com/console/voice/twiml/apps)
+    - Select the TwiML App you created earlier
+    - On your TwiML App's information page, find the 'Voice Configuration' section. 
+    - Change the Request URL to your ngrok url with `/voice` appended to the end. (E.g: `https://asdf456.ngrok.io/voice`) **Note:** You **must** use the https URL, otherwise some browsers will block
    microphone access.
+   - Click the 'Save' button. 
 
-   ![screenshot of twiml app](https://s3.amazonaws.com/com.twilio.prod.twilio-docs/images/TwilioClientRequestUrl.original.png)
+   ![screenshot of TwiML App Voice Configuration](./screenshots/UpdateRequestURL.png)
 
 You should now be ready to make and receive calls from your browser. 
 
+## Your Web Application
 
-   ![screenshot of application homepage](./screenshot_homepage.png)
+When you navigate to `localhost:3000`, you should see the web application containing a 'Start up the Device' button. Click this button to initialize a `Twilio.Device`.
 
-When the `Twilio.Device` is initialized, you will be assigned a random "client name", which will appear in the top left corner of the homepage. This client name is used as the identity field when generating an Access Token for the `Twilio.Device`, and is also used to route SDK-to-SDK calls to the correct `Twilio.Device`.
+   ![screenshot of web app home page](./screenshots/InitializeDevice.png)
 
-You can make outbound calls by entering a phone number or a client name. 
+When the `Twilio.Device` is initialized, you will be assigned a random "client name", which will appear the 'Device Info' column on the left side of the page. This client name is used as the `identity` field when generating an Access Token for the `Twilio.Device`, and is also used to route SDK-to-SDK calls to the correct `Twilio.Device`.
 
-If you would like to test browser-to-browser calls, open two browser windows to `localhost:3000`. You should see the new client name. You can make calls between these two clients by entering one client's name in the box for making an outbound call.
+   ![screenshot of client name on web app](./screenshots/ClientName.png)
 
-![screenshot of application homepage](./screenshot_two_calls.png)
+### To make an outbound call to a phone number:
+  - Under 'Make a Call', enter a phone number in [E.164 format](https://en.wikipedia.org/wiki/E.164) and press the 'Call' button 
 
-You can also receiving an incoming call to your browser by calling the Twilio number you specified as your `TWILIO_CALLER_ID` in your `.env` file. **Note:** Since this is a quickstart with limited functionality, incoming calls will only be routed to the most recently-created `Twilio.Device`. 
+### To make a browser-to browser call:
+
+Open two browser windows to `localhost:3000` and click 'Start up the Device' button in both windows. You should see a different client name in each window. 
+
+Enter one client's name in the other client's 'Make a Call' input and press the 'Call' button.
+
+![screenshot of application homepage](./screenshots/BrowserToBrowser.png)
+
+### Receiving Incoming Calls from a Non-Browser Device
+
+You will first need to configure your Twilio Voice Phone Number with the same ngrok url (with '/voice' on the end) as you did for your TwiML App. This tells Twilio what to do once your Twilio Phone number receives an incoming call.
+
+   1. Log in to your [Twilio Console](https://www.twilio.com/console)
+   2. Navigate to your [Active Numbers list](https://www.twilio.com/console/phone-numbers/incoming)
+   3. Click on the number you purchased earlier. 
+   4. Scroll down to find the 'Voice & Fax' section and look for 'A CALL COMES IN'
+   5. Enter your ngrok https url (with "/voice") you used earlier
+   6. Leave 'Webhook' and 'HTTP POST' selections the same
+   7. Click 'Save'
+
+   ![screenshot of phone number configuration](./screenshots/ConfigurePhoneNumber.png)
+
+Once you have configured your phone number, you can call the Twilio number you specified as your `TWILIO_CALLER_ID` in your `.env` file. 
+
+**Note:** Since this is a quickstart with limited functionality, incoming calls will only be routed to your most recently-created `Twilio.Device`. 
+
+### Unknown Audio Devices
 
 If you see "Unknown Audio Output Device 1" in the "Ringtone" or "Speaker" devices lists, click the button below the boxes (Seeing "Unknown" Devices?) to have your browser identify your input and output devices.
-![screenshot of unknown devices](./screenshot_unknown_devices.png)
 
 ### Docker
 
@@ -117,17 +147,9 @@ If you have [Docker](https://www.docker.com/) already installed on your machine,
 4. Follow the steps in [Local Development](#local-development) on how to expose your port to Twilio using a tool like [ngrok](https://ngrok.com/) and configure the remaining parts of your application.
 
 
-### Tests
-
-To execute tests, run the following command in the project directory:
-
-```bash
-npm test
-```
-
 ### Cloud deployment
 
-Additionally to trying out this application locally, you can deploy it to a variety of host services. Here is a small selection of them.
+In addition to trying out this application locally, you can deploy it to a variety of host services. Heroku is one option, linked below.
 
 Please be aware that some of these might charge you for the usage or might make the source code for this application visible to the public. When in doubt research the respective hosting service first.
 

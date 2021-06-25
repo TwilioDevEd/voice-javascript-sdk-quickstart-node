@@ -119,7 +119,7 @@ You will first need to configure your Twilio Voice Phone Number with the same ng
 
    1. Log in to your [Twilio Console](https://www.twilio.com/console)
    2. Navigate to your [Active Numbers list](https://www.twilio.com/console/phone-numbers/incoming)
-   3. Click on the number you purchased earlier. 
+   3. Click on the number you purchased earlier 
    4. Scroll down to find the 'Voice & Fax' section and look for 'A CALL COMES IN'
    5. Enter your ngrok https url (with "/voice") you used earlier
    6. Leave 'Webhook' and 'HTTP POST' selections the same
@@ -127,7 +127,7 @@ You will first need to configure your Twilio Voice Phone Number with the same ng
 
    ![screenshot of phone number configuration](./screenshots/ConfigurePhoneNumber.png)
 
-Once you have configured your phone number, you can call the Twilio number you specified as your `TWILIO_CALLER_ID` in your `.env` file. 
+You can now call your Twilio Voice Phone Number from your cell or landline phone. 
 
 **Note:** Since this is a quickstart with limited functionality, incoming calls will only be routed to your most recently-created `Twilio.Device`. 
 
@@ -149,7 +149,7 @@ If you have [Docker](https://www.docker.com/) already installed on your machine,
 
 In addition to trying out this application locally, you can deploy it to a variety of host services. Heroku is one option, linked below.
 
-Please be aware that some of these might charge you for the usage or might make the source code for this application visible to the public. When in doubt research the respective hosting service first.
+Please be aware that some of these services may charge you for the usage and/or might make the source code for this application visible to the public. When in doubt, research the respective hosting service first.
 
 | Service                           |                                                                                                                                                                                                                           |
 | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

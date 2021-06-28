@@ -10,7 +10,9 @@
 
 ## About
 
-This application should give you a ready-made starting point for writing your own voice apps with Twilio Voice JavaScript SDK 2.0 (Formerly known as Twilio Client). This application is built in Node.
+This application should give you a ready-made starting point for writing your own voice apps with Twilio Voice JavaScript SDK 2.0 (Formerly known as Twilio Client). The SDK is included in the /public directory as `twilio.min.js`. 
+
+This application is built in Node.
 
 Implementations in other languages:
 

@@ -10,13 +10,15 @@
 
 ## About
 
-This application should give you a ready-made starting point for writing your own voice apps with Twilio Voice JavaScript SDK 2.0 (Formerly known as Twilio Client). This application is built in Node.
+This application should give you a ready-made starting point for writing your own voice apps with Twilio Voice JavaScript SDK 2.0 (Formerly known as Twilio Client). 
+
+This application is built in Node.
 
 Implementations in other languages:
 
 | .NET        | Java        | Python                                                                        | PHP         | Ruby        |
 | :---------- | :---------- | :---------------------------------------------------------------------------- | :---------- | :---------- |
-| Coming soon | Coming soon | [Done](https://github.com/TwilioDevEd/voice-javascript-sdk-quickstart-python) | Coming soon | Coming soon |
+| Coming soon | [Done](https://github.com/TwilioDevEd/voice-javascript-sdk-quickstart-java)| [Done](https://github.com/TwilioDevEd/voice-javascript-sdk-quickstart-python) | [Done](https://github.com/TwilioDevEd/voice-javascript-sdk-quickstart-php) | [Done](https://github.com/TwilioDevEd/voice-javascript-sdk-quickstart-ruby) |
 
 ## Set Up
 

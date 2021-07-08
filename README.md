@@ -12,6 +12,10 @@
 
 This application should give you a ready-made starting point for writing your own voice apps with Twilio Voice JavaScript SDK 2.0 (Formerly known as Twilio Client). 
 
+
+> **NOTE** The Twilio JS SDK library is included in this repo as [`twilio.min.js`](./public/twilio.min.js) using the build artifact from the [2.0.0 tag](https://github.com/twilio/twilio-voice.js/releases/tag/2.0.0). The 2.0.1 version is expected to be publicly available on npm before 7/11/2021. This project will be updated to use `npm install @twilio/twilio-voice` at that time. 
+
+
 This application is built in Node.
 
 Implementations in other languages:

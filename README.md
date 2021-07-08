@@ -12,7 +12,9 @@
 
 This application should give you a ready-made starting point for writing your own voice apps with Twilio Voice JavaScript SDK 2.0 (Formerly known as Twilio Client). 
 
-**NOTE** The Twilio JS SDK library is included in this repo as [`twilio.min.js`](./public/twilio.min.js) using the build artifact from the [2.0.0 tag](https://github.com/twilio/twilio-voice.js/releases/tag/2.0.0). The 2.0.1 version is expected to be publicly available on npm before 7/11/2021. This project will be updated to use `npm install @twilio/twilio-voice` at that time. 
+
+> **NOTE** The Twilio JS SDK library is included in this repo as [`twilio.min.js`](./public/twilio.min.js) using the build artifact from the [2.0.0 tag](https://github.com/twilio/twilio-voice.js/releases/tag/2.0.0). The 2.0.1 version is expected to be publicly available on npm before 7/11/2021. This project will be updated to use `npm install @twilio/twilio-voice` at that time. 
+
 
 This application is built in Node.
 
@@ -128,17 +130,17 @@ Enter one client's name in the other client's 'Make a Call' input and press the 
 
 ### Receiving Incoming Calls from a Non-Browser Device
 
-You will first need to configure your Twilio Voice Phone Number with the same ngrok url (with '/voice' on the end) as you did for your TwiML App. This tells Twilio how to handle an incoming call directed to your Twilio Voice Number.
+You will first need to configure your Twilio Voice Phone Number to use the TwiML App we created earlier. This tells Twilio how to handle an incoming call directed to your Twilio Voice Number.
 
 1.  Log in to your [Twilio Console](https://www.twilio.com/console)
 2.  Navigate to your [Active Numbers list](https://www.twilio.com/console/phone-numbers/incoming)
 3.  Click on the number you purchased earlier
-4.  Scroll down to find the 'Voice & Fax' section and look for 'A CALL COMES IN'
-5.  Enter your ngrok https url (with "/voice") you used earlier
-6.  Leave 'Webhook' and 'HTTP POST' selections the same
-7.  Click 'Save'
+4.  Scroll down to find the 'Voice & Fax' section and look for 'CONFIGURE WITH'
+5.  Select 'TwiML' App
+6.  Under 'TWIML APP', choose the TwiML App you created earlier.
+7.  Click the 'Save' button at the bottom of the browser window.
 
-![screenshot of phone number configuration](./screenshots/ConfigurePhoneNumber.png)
+![screenshot of phone number configuration](./screenshots/ConfigurePhoneNumberWithTwiMLApp.png)
 
 You can now call your Twilio Voice Phone Number from your cell or landline phone.
 

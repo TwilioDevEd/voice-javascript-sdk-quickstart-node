@@ -74,7 +74,7 @@ Before we begin local development, we need to collect all the config values we n
    npm install
    ```
 
-4. Copy the `twilio.min.js` file from your `node_modules` to your `public` directory. 
+4. Copy the `twilio.min.js` file from your `node_modules` to your `public` directory. Run the following from the root directory of your project: 
 
    ```bash
    cp node_modules/@twilio/voice-sdk/dist/twilio.min.js public

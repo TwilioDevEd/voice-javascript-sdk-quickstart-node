@@ -12,10 +12,6 @@
 
 This application should give you a ready-made starting point for writing your own voice apps with Twilio Voice JavaScript SDK 2.0 (Formerly known as Twilio Client). 
 
-
-> **NOTE** The Twilio JS SDK library is included in this repo as [`twilio.min.js`](./public/twilio.min.js) using the build artifact from the [2.0.0 tag](https://github.com/twilio/twilio-voice.js/releases/tag/2.0.0). The 2.0.1 version is expected to be publicly available on npm before 7/11/2021. This project will be updated to use `npm install @twilio/twilio-voice` at that time. 
-
-
 This application is built in Node.
 
 Implementations in other languages:
@@ -78,24 +74,31 @@ Before we begin local development, we need to collect all the config values we n
    npm install
    ```
 
-4. Launch local development web server.
+4. Copy the `twilio.min.js` file from your `node_modules` to your `public` directory. Run the following from the root directory of your project: 
+
+   ```bash
+   cp node_modules/@twilio/voice-sdk/dist/twilio.min.js public
+   ```
+   **Note:** In order to keep this quickstart as simple as possible, this step is used to avoid any need for build tools like Webpack.
+
+5. Launch local development web server.
 
    ```bash
    npm start
    ```
 
-5. Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+6. Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
 
-6. Expose your application to the wider internet using `ngrok`. This step is **crucial** for the app to work as expected.
+7. Expose your application to the wider internet using `ngrok`. This step is **crucial** for the app to work as expected.
 
    ```bash
    ngrok http 3000
    ```
 
-7. `ngrok` will assign a unique URL to your tunnel.
+8. `ngrok` will assign a unique URL to your tunnel.
    It might be something like `https://asdf456.ngrok.io`. You will need this to configure your TwiML app in the next step.
 
-8. Configure your TwiML app
+9. Configure your TwiML app
 
    - In the Twilio Console, navigate to [Programmable Voice > TwiML > TwiML Apps](https://www.twilio.com/console/voice/twiml/apps)
    - Select the TwiML App you created earlier

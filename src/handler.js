@@ -31,14 +31,13 @@ exports.tokenGenerator = function tokenGenerator() {
 
 exports.voiceResponse = function voiceResponse(requestBody) {
   const toNumberOrClientName = requestBody.To;
-
+  const callerId = config.callerId;
   let twiml = new VoiceResponse();
 
   // If the request to the /voice endpoint is TO your Twilio Number, 
   // then it is an incoming call towards your Twilio.Device.
-  if (requestBody.To == config.callerId) {
-    
-    dial = twiml.dial();
+  if (toNumberOrClientName == callerId) {
+    let dial = twiml.dial();
 
     // This will connect the caller with your Twilio.Device/client 
     dial.client(identity);
@@ -47,7 +46,7 @@ exports.voiceResponse = function voiceResponse(requestBody) {
     // This is an outgoing call
 
     // set the callerId
-    dial = twiml.dial({ callerId: config.callerId });
+    let dial = twiml.dial({ callerId });
 
     // Check if the 'To' parameter is a Phone Number or Client Name
     // in order to use the appropriate TwiML noun 

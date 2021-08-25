@@ -5,7 +5,7 @@
   const inputVolumeBar = document.getElementById("input-volume");
   const volumeIndicators = document.getElementById("volume-indicators");
   const callButton = document.getElementById("button-call");
-  const hangupButton = document.getElementById("button-hangup");
+  const outgoingCallHangupButton = document.getElementById("button-hangup-outgoing");
   const callControlsDiv = document.getElementById("call-controls");
   const audioSelectionDiv = document.getElementById("output-selection");
   const getAudioDevicesButton = document.getElementById("get-devices");
@@ -36,7 +36,7 @@
   getAudioDevicesButton.onclick = getAudioDevices;
   speakerDevices.addEventListener("change", updateOutputDevice);
   ringtoneDevices.addEventListener("change", updateRingtoneDevice);
-  hangupButton.onclick = hangup;
+  
 
   // SETUP STEP 1:
   // Browser client should be started after a user gesture
@@ -116,35 +116,34 @@
 
       // add listeners to the Call
       // "accepted" means the call has finished connecting and the state is now "open"
-      call.addListener("accept", updateUIAcceptedCall);
-      call.addListener("disconnect", updateUIDisconnectedCall);
+      call.on("accept", updateUIAcceptedOutgoingCall);
+      call.on("disconnect", updateUIDisconnectedOutgoingCall);
+      call.on("cancel", updateUIDisconnectedOutgoingCall);
+      call.on("reject", updateUIDisconnectedOutgoingCall);
+
+      outgoingCallHangupButton.onclick = () => {
+        log("Hanging up ...");
+        call.disconnect();
+      };
+
     } else {
       log("Unable to make call.");
     }
   }
 
-  function updateUIAcceptedCall(call) {
+  function updateUIAcceptedOutgoingCall(call) {
     log("Call in progress ...");
     callButton.disabled = true;
-    hangupButton.classList.remove("hide");
+    outgoingCallHangupButton.classList.remove("hide");
     volumeIndicators.classList.remove("hide");
     bindVolumeIndicators(call);
   }
 
-  function updateUIDisconnectedCall() {
+  function updateUIDisconnectedOutgoingCall() {
     log("Call disconnected.");
     callButton.disabled = false;
-    hangupButton.classList.add("hide");
+    outgoingCallHangupButton.classList.add("hide");
     volumeIndicators.classList.add("hide");
-  }
-
-  // HANG UP A CALL
-
-  function hangup() {
-    log("Hanging up ...");
-    if (device) {
-      device.disconnectAll();
-    }
   }
 
   // HANDLE INCOMING CALL
@@ -170,7 +169,9 @@
     };
 
     // add event listener to call object
-    call.addListener("cancel", handleDisconnectedIncomingCall);
+    call.on("cancel", handleDisconnectedIncomingCall);
+    call.on("disconnect", handleDisconnectedIncomingCall);
+    call.on("reject", handleDisconnectedIncomingCall);
   }
 
   // ACCEPT INCOMING CALL
@@ -189,23 +190,21 @@
 
   function rejectIncomingCall(call) {
     call.reject();
-
     log("Rejected incoming call");
     resetIncomingCallUI();
   }
 
   // HANG UP INCOMING CALL
 
-  function hangupIncomingCall() {
-    hangup();
-
+  function hangupIncomingCall(call) {
+    call.disconnect();
+    log("Hanging up incoming call");
     resetIncomingCallUI();
   }
 
   // HANDLE CANCELLED INCOMING CALL
 
-  function handleDisconnectedIncomingCall(call) {
-    device.disconnectAll();
+  function handleDisconnectedIncomingCall() {
     log("Incoming call ended.");
     resetIncomingCallUI();
   }
@@ -225,6 +224,9 @@
 
   function resetIncomingCallUI() {
     incomingPhoneNumberEl.innerHTML = "";
+    incomingCallAcceptButton.classList.remove("hide");
+    incomingCallRejectButton.classList.remove("hide");
+    incomingCallHangupButton.classList.add("hide");
     incomingCallDiv.classList.add("hide");
   }
 

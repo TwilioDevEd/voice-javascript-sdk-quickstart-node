@@ -1,0 +1,7 @@
+{
+  "name": "Twilio Voice JavaScript SDK Quickstart",
+  "description": "Quick Start application for Twilio Voice JavaScript SDK on Node.js",
+  "repository": "https://github.com/TwilioDevEd/voice-javascript-sdk-quickstart-node",
+  "keywords": ["node", "express", "heroku", "twilio", "voice-sdk"],
+  "image": "heroku/nodejs"
+}

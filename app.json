@@ -3,5 +3,32 @@
   "description": "Quick Start application for Twilio Voice JavaScript SDK on Node.js",
   "repository": "https://github.com/TwilioDevEd/voice-javascript-sdk-quickstart-node",
   "keywords": ["node", "express", "heroku", "twilio", "voice-sdk"],
-  "image": "heroku/nodejs"
+  "image": "heroku/nodejs",
+  "env": {
+    "TWILIO_ACCOUNT_SID": {
+      "description": "Your primary Twilio account identifier",
+      "required": true,
+      "value": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "TWILIO_API_KEY": {
+      "description": "Your API Key SID",
+      "required": true,
+      "value": "SKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    "TWILIO_API_SECRET": {
+      "description": "The secret associated with the API Key",
+      "required": true,
+      "value": "XXXXXXXXXXXXXXXXX"
+    },
+    "TWILIO_CALLER_ID": {
+      "description": "Your Twilio phone number in E.164 format",
+      "required": true,
+      "value": "+1XXXYYYZZZZ"
+    },
+    "TWILIO_TWIML_APP_SID": {
+      "description": "The SID of your TwiML App",
+      "required": true,
+      "value": "APXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+  }
 }

@@ -3,10 +3,6 @@ const { tokenGenerator, voiceResponse } = require("./handler");
 
 const router = new Router();
 
-/**
- * Generate a Capability Token for a Twilio Client user - it generates a random
- * username for the client requesting a token.
- */
 router.get("/token", (req, res) => {
   res.send(tokenGenerator());
 });

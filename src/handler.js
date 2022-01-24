@@ -37,17 +37,11 @@ exports.voiceResponse = function voiceResponse(requestBody) {
   const callerId = config.callerId;
   let twiml = new VoiceResponse();
 
-  // If the request to the /voice endpoint is TO your Twilio Number, 
-  // then it is an incoming call towards your Twilio.Device.
-  if (toNumberOrClientName == callerId) {
-    let dial = twiml.dial();
 
-    // This will connect the caller with your Twilio.Device/client 
-    dial.client(identity);
-
-  } else if (requestBody.To) {
-    // This is an outgoing call
-
+  // The isOutgoing param in our VoiceGrant tells Twilio to send an 
+  // isOutgoing property with in the webhook request to the 
+  // /voice endpoint when a call is outgoing from our browser device
+  if (requestBody.isOutgoing) {
     // set the callerId
     let dial = twiml.dial({ callerId });
 
@@ -58,7 +52,10 @@ exports.voiceResponse = function voiceResponse(requestBody) {
       : "client";
     dial[attr]({}, toNumberOrClientName);
   } else {
-    twiml.say("Thanks for calling!");
+    let dial = twiml.dial();
+
+    // This will connect the caller with your Twilio.Device/client 
+    dial.client(identity);
   }
 
   return twiml.toString();

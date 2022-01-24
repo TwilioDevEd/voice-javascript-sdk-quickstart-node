@@ -19,6 +19,9 @@ exports.tokenGenerator = function tokenGenerator() {
   const grant = new VoiceGrant({
     outgoingApplicationSid: config.twimlAppSid,
     incomingAllow: true,
+    outgoingApplicationParams: {
+      isOutgoing: true
+    }
   });
   accessToken.addGrant(grant);
 

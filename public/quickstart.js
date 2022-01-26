@@ -66,9 +66,8 @@
     log("Initializing device");
     device = new Twilio.Device(token, {
       logLevel:1,
-      answerOnBridge: true,
       // Set Opus as our preferred codec. Opus generally performs better, requiring less bandwidth and
-      // providing better audio quality in restrained network conditions. Opus will be default in 2.0.
+      // providing better audio quality in restrained network conditions.
       codecPreferences: ["opus", "pcmu"],
     });
 

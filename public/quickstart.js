@@ -118,7 +118,6 @@
       call.on("accept", updateUIAcceptedOutgoingCall);
       call.on("disconnect", updateUIDisconnectedOutgoingCall);
       call.on("cancel", updateUIDisconnectedOutgoingCall);
-      call.on("reject", updateUIDisconnectedOutgoingCall);
 
       outgoingCallHangupButton.onclick = () => {
         log("Hanging up ...");

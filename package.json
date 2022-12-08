@@ -38,6 +38,6 @@
     "eslint": "^7.29.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^27.0.5",
-    "prettier": "2.3.1"
+    "prettier": "2.8.1"
   }
 }

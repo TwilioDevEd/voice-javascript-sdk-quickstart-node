@@ -35,7 +35,7 @@
     "twilio": "~3.64.0"
   },
   "devDependencies": {
-    "eslint": "^7.29.0",
+    "eslint": "^8.30.0",
     "eslint-config-google": "^0.14.0",
     "jest": "^27.0.5",
     "prettier": "2.3.1"

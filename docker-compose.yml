@@ -10,6 +10,6 @@ services:
   ngrok:
     restart: always
     image: ngrok/ngrok:alpine
-    command: http app:3000 --log=stdout --subdomain intralanman
+    command: http app:3000 --log=stdout
     env_file:
       - .env

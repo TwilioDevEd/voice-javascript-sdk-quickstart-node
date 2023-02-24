@@ -5,3 +5,11 @@ services:
     build: .
     ports:
       - "3000:3000"
+    env_file:
+      - .env
+  ngrok:
+    restart: always
+    image: ngrok/ngrok:alpine
+    command: http app:3000 --log=stdout --subdomain intralanman
+    env_file:
+      - .env

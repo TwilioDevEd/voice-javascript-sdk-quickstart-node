@@ -30,7 +30,7 @@
   "dependencies": {
     "@twilio/voice-sdk": "^2.2.0",
     "body-parser": "^1.19.0",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "twilio": "~3.64.0"
   },

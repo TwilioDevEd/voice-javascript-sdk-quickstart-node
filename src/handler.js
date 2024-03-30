@@ -7,26 +7,22 @@ const config = require("../config");
 
 var identity;
 
-exports.tokenGenerator = function tokenGenerator() {
-  identity = nameGenerator();
-
-  const accessToken = new AccessToken(
-    config.accountSid,
-    config.apiKey,
-    config.apiSecret
-  );
+exports.tokenGenerator = function tokenGenerator(identity) {
+  if (!identity) {
+      identity = nameGenerator();
+      if (!identity) {
+          throw new Error("Identity is required but not provided.");
+      }
+  } else {
+      if (!identity.trim()) {
+          throw new Error("Identity is required but not provided.");
+      }
+  }
+  const accessToken = new AccessToken(config.accountSid, config.apiKey, config.apiSecret, { ttl: 3600, identity: identity });
   accessToken.identity = identity;
-  const grant = new VoiceGrant({
-    outgoingApplicationSid: config.twimlAppSid,
-    incomingAllow: true,
-  });
+  const grant = new VoiceGrant({ outgoingApplicationSid: config.twimlAppSid, incomingAllow: !0 });
   accessToken.addGrant(grant);
-
-  // Include identity and token in a JSON response
-  return {
-    identity: identity,
-    token: accessToken.toJwt(),
-  };
+  return { identity: identity, token: accessToken.toJwt() };
 };
 
 exports.voiceResponse = function voiceResponse(requestBody) {
